@@ -1,3 +1,4 @@
+#include "/Users/pjuhas/arch/devbase/include/dbprint.h"
 /*****************************************************************************
 *
 * pyobjcryst        by DANSE Diffraction group
@@ -177,12 +178,27 @@ bp::list _GetScatteringComponentList(Scatterer& s)
 }
 
 
+bool identical_reference(const Scatterer* s0, const Scatterer* s1)
+{
+DBPRINT(s0);
+DBPRINT(s1);
+    return s0 == s1;
+}
+
+
+bool not_identical_reference(const Scatterer* s0, const Scatterer* s1)
+{
+DBPRINT(s0);
+DBPRINT(s1);
+    return s0 != s1;
+}
+
+
 } // anonymous namespace
 
 
 void wrap_scatterer()
 {
-
     class_<ScattererWrap, boost::noncopyable, bases<RefinableObj> >
         ("Scatterer")
         /* Constructors */
@@ -217,6 +233,9 @@ void wrap_scatterer()
             with_custodian_and_ward_postcall<1,0>())
         .def("Print", pure_virtual(&Scatterer::Print))
         .def("__str__", &__str__<Scatterer>)
+        .def("__eq__", identical_reference)
+        .def("__ne__", not_identical_reference)
+
         // protected methods
         .def("GetClockScattCompList",
             &ScattererWrap::_GetClockScattCompList,
