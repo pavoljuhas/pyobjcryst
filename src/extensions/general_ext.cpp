@@ -24,6 +24,8 @@
 #include <ObjCryst/version.h>
 #include <ObjCryst/ObjCryst/General.h>
 
+#include "helpers.hpp"
+
 #if LIBOBJCRYST_VERSION < 2017002002000LL
 #error pyobjcryst requires libobjcryst 2017.2.2 or later.
 #endif
@@ -68,4 +70,5 @@ void wrap_general()
     def("_get_libobjcryst_version_info_dict",
             get_libobjcryst_version_info_dict,
             doc__get_libobjcryst_version_info_dict);
+    def("same_object", same_object);
 }

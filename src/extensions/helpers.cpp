@@ -23,6 +23,7 @@
 #include <list>
 
 #include <ObjCryst/CrystVector/CrystVector.h>
+#include <ObjCryst/RefinableObj/RefinableObj.h>
 
 // Use numpy here, but initialize it later in the extension module.
 #include "pyobjcryst_numpy_setup.hpp"
@@ -130,4 +131,14 @@ int check_index(int idx, int size, NegativeIndexFlag nflag)
     }
     int rv = (idx < 0) ? size + idx : idx;
     return rv;
+}
+
+
+bool same_object(bp::object& a, bp::object& b)
+{
+    using ObjCryst::RefinableObj;
+    if (Py_TYPE(a.ptr()) != Py_TYPE(b.ptr()))  return false;
+    RefinableObj* pa = bp::extract<RefinableObj*>(a);
+    RefinableObj* pb = bp::extract<RefinableObj*>(b);
+    return pa == pb;
 }

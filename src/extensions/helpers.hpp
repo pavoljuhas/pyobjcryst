@@ -140,4 +140,6 @@ void assignCrystVector(CrystVector<double>& cv, bp::object obj);
 enum NegativeIndexFlag {POSITIVE, ALLOW_NEGATIVE};
 int check_index(int idx, int size, NegativeIndexFlag nflag);
 
+bool same_object(bp::object& a, bp::object& b);
+
 #endif
